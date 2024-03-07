@@ -992,6 +992,11 @@ ansi-styles@^4.0.0, ansi-styles@^4.1.0:
   dependencies:
     color-convert "^2.0.1"
 
+antlr4@^4.10.1:
+  version "4.13.1"
+  resolved "https://registry.yarnpkg.com/antlr4/-/antlr4-4.13.1.tgz#1e0a1830a08faeb86217cb2e6c34716004e4253d"
+  integrity sha512-kiXTspaRYvnIArgE97z5YVVf/cDVQABr3abFRR6mE7yesLMkgu4ujuyV/sgxafQ8wgve0DJQUJ38Z8tkgA2izA==
+
 "aproba@^1.0.3 || ^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/aproba/-/aproba-2.0.0.tgz#52520b8ae5b569215b354efc0caa3fe1e45a8adc"
@@ -1157,6 +1162,13 @@ base64-js@^1.3.1, base64-js@^1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.5.1.tgz#1b1b440160a5bf7ad40b650f095963481903930a"
   integrity sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==
+
+bibtex-js-parser@^1.1.6:
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/bibtex-js-parser/-/bibtex-js-parser-1.1.6.tgz#b50f85dcf628f39edef756d84741a990ac684721"
+  integrity sha512-MIU5orNfUmUcBSr2jbxzjcK8QxoFRp2NsS5qrZO/5Hke7uEc/i8J2bUeLxLCJh7uuOmhl1EFQWHs8u+pukhxaQ==
+  dependencies:
+    antlr4 "^4.10.1"
 
 bl@^4.1.0:
   version "4.1.0"

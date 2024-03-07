@@ -1,6 +1,7 @@
 import { app, BrowserWindow, ipcMain } from "electron";
 import path from "path";
-import getCitationData from "./scraping";
+import getCitationData from "./lib/scraping";
+import articleCite from "./lib/citingCorrectly";
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -10,11 +11,11 @@ if (require("electron-squirrel-startup")) {
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1000,
+    height: 800,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
-    },
+    }
   });
 
   // and load the index.html of the app.
@@ -36,11 +37,8 @@ const createWindow = () => {
 app.on("ready", createWindow);
 
 ipcMain.handle("scrapeSite", async (event, url: string) => {
-  console.log("im here now");
   const res = await getCitationData(url);
-  console.log(res);
-
-  return await res;
+  return articleCite(res);
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common

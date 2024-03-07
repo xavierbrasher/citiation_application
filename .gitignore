@@ -35,6 +35,7 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
+out/
 
 # TypeScript v1 declaration files
 typings/
@@ -88,5 +89,3 @@ typings/
 # Vite
 .vite/
 
-# Electron-Forge
-out/
