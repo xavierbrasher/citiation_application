@@ -1,7 +1,9 @@
 import { load } from "cheerio";
 import axios from "axios";
 import type {CheerioAPI} from "cheerio";
-import {BibtexParser} from "bibtex-js-parser";
+// @ts-ignore
+import BibtexParser from "@orcid/bibtex-parse-js";
+
 
 const headers = {
   "Accept":
@@ -20,12 +22,18 @@ const headers = {
     "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36",
 };
 
+
+function replaceNonUnicodeSymbols(text: any) {
+
+  // eslint-disable-next-line no-control-regex
+  return text.replace(/[^\x00-\x7F]/g, ''); // Replace non-Unicode characters with an empty string
+}
 const getDataFromJSTOR = async (url: string, $: CheerioAPI) => {
   const uuid = $("div #cdt")[0].attribs["data-content-id"];
   const data = (await axios.get("https://www.jstor.org/citation/text/" + uuid)).data;
-  const DataJson = BibtexParser.parseToJSON(data)[0]
 
-  return DataJson;
+  const DataJson = BibtexParser.toJSON(data)
+  return DataJson[0];
 }
 
 

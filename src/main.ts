@@ -2,6 +2,7 @@ import { app, BrowserWindow, ipcMain } from "electron";
 import path from "path";
 import getCitationData from "./lib/scraping";
 import articleCite from "./lib/citingCorrectly";
+import citingCorrectly from "./lib/citingCorrectly";
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -38,7 +39,7 @@ app.on("ready", createWindow);
 
 ipcMain.handle("scrapeSite", async (event, url: string) => {
   const res = await getCitationData(url);
-  return articleCite(res);
+  return citingCorrectly(res);
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common

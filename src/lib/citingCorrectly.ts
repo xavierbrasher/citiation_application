@@ -1,4 +1,3 @@
-import type {Entry} from "bibtex-js-parser";
 
 const getSurname = (author: string) => {
     const splitd = author.split(" ");
@@ -15,12 +14,20 @@ const getInitals = (author: string) => {
     return initals;
 };
 
-const articleCite = (data: Entry) => {
-    console.log("hello!")
-    console.log(data)
-    const authorSurname = getSurname(data.author || data.publisher)
-    const initials = getInitals(data.author || data.publisher)
-    return authorSurname + ", " + initials + " (" + data.year + ") '" + data.title + "', <i>" + data.journal + "</i>, " + data.volume + "(" + data.number + "), pp." + data.pages + ". Available at: " + data.url + ". (Accessed: " + data.urldate + ")."
+const articleCite = (entry: any) => {
+    const data = entry.entryTags
+    if (!data.author) {
+        return "NO AUTHOR (" + data.year + ") '" + data.title + "', <i>" + data.journal + "</i>, " + data.volume + "(" + data.number + "), pp." + data.pages + ". Available at: " + data.URL + ". (Accessed: " + data.urldate + ")."
+    }
+    const authorSurname = getSurname(data.author)
+    const initials = getInitals(data.author)
+    if (data.number) {
+        return authorSurname + ", " + initials + " (" + data.year + ") '" + data.title + "', <i>" + data.journal + "</i>, " + data.volume + "(" + data.number + "), pp." + data.pages + ". Available at: " + data.URL + ". (Accessed: " + data.urldate + ")."
+    }
+    else {
+        return authorSurname + ", " + initials + " (" + data.year + ") '" + data.title + "', <i>" + data.journal + "</i>, " + data.volume + ", pp." + data.pages + ". Available at: " + data.URL + ". (Accessed: " + data.urldate + ")."
+
+    }
 }
 
 export default articleCite;

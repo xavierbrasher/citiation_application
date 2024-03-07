@@ -37,8 +37,9 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@orcid/bibtex-parse-js": "^0.0.25",
+    "@types/node": "*",
     "axios": "^1.6.7",
-    "bibtex-js-parser": "^1.1.6",
     "cheerio": "^1.0.0-rc.12",
     "electron-squirrel-startup": "^1.0.0",
     "minimist": "^1.2.8"
