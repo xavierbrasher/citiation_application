@@ -1,0 +1,83 @@
+yarn run v1.22.19
+$ node index.js
+LoadedCheerio {
+  '0': <ref *1> Element {
+    parent: Element {
+      parent: [Element],
+      prev: null,
+      next: [Text],
+      startIndex: null,
+      endIndex: null,
+      children: [Array],
+      name: 'head',
+      attribs: [Object: null prototype] {},
+      type: 'tag',
+      namespace: 'http://www.w3.org/1999/xhtml',
+      'x-attribsNamespace': [Object: null prototype] {},
+      'x-attribsPrefix': [Object: null prototype] {}
+    },
+    prev: Text {
+      parent: [Element],
+      prev: [Element],
+      next: [Circular *1],
+      startIndex: null,
+      endIndex: null,
+      data: '\n',
+      type: 'text'
+    },
+    next: Text {
+      parent: [Element],
+      prev: [Circular *1],
+      next: [Element],
+      startIndex: null,
+      endIndex: null,
+      data: '\n',
+      type: 'text'
+    },
+    startIndex: null,
+    endIndex: null,
+    children: [],
+    name: 'meta',
+    attribs: [Object: null prototype] {
+      name: 'description',
+      content: 'W. W. Milner, Generating Random Numbers, Mathematics in School, Vol. 14, No. 4 (Sep., 1985), pp. 12-13'
+    },
+    type: 'tag',
+    namespace: 'http://www.w3.org/1999/xhtml',
+    'x-attribsNamespace': [Object: null prototype] { name: undefined, content: undefined },
+    'x-attribsPrefix': [Object: null prototype] { name: undefined, content: undefined }
+  },
+  length: 1,
+  options: { xml: false, decodeEntities: true },
+  _root: <ref *2> LoadedCheerio {
+    '0': Document {
+      parent: null,
+      prev: null,
+      next: null,
+      startIndex: null,
+      endIndex: null,
+      children: [Array],
+      type: 'root',
+      'x-mode': 'no-quirks'
+    },
+    length: 1,
+    options: { xml: false, decodeEntities: true },
+    _root: [Circular *2]
+  },
+  prevObject: <ref *3> LoadedCheerio {
+    '0': Document {
+      parent: null,
+      prev: null,
+      next: null,
+      startIndex: null,
+      endIndex: null,
+      children: [Array],
+      type: 'root',
+      'x-mode': 'no-quirks'
+    },
+    length: 1,
+    options: { xml: false, decodeEntities: true },
+    _root: [Circular *3]
+  }
+}
+Done in 3.62s.

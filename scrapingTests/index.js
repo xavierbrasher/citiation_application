@@ -1,48 +1,41 @@
-import playwright from "playwright";
-import * as cheerio from "cheerio";
+import { load } from "cheerio";
+import axios from "axios";
+import minim from "minimist";
 
-async function getHtml(url) {
-  // 'webkit' is also supported, but there is a problem on Linux
-  const browser = await playwright["firefox"].launch();
-  const context = await browser.newContext();
-  const page = await context.newPage();
-  await page.goto(url);
-  const html = await page.content();
+var argv = minim(process.argv.slice(2));
+// console.log(argv);
 
-  await browser.close();
+const headers = {
+  Accept:
+    "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+  "Accept-Encoding": "gzip, deflate, br",
+  "Accept-Language": "en-US,en;q=0.9",
+  "Sec-Ch-Ua":
+    '"Chromium";v="92", " Not A;Brand";v="99", "Google Chrome";v="92"',
+  "Sec-Ch-Ua-Mobile": "?0",
+  "Sec-Fetch-Dest": "document",
+  "Sec-Fetch-Mode": "navigate",
+  "Sec-Fetch-Site": "none",
+  "Sec-Fetch-User": "?1",
+  "Upgrade-Insecure-Requests": "1",
+  "User-Agent":
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36",
+};
 
-  return html;
-}
+var main1 = argv._[0] || "https://www.jstor.org/stable/30216523";
+var page = axios.get(main1, {
+  headers: headers,
+});
+const getHTML = async () => {
+  return (await page).data;
+};
 
-function findTextAndReturnRemainder(target, variable) {
-  var chopFront = target.substring(
-    target.search(variable) + variable.length,
-    target.length
-  );
-  var result = chopFront.substring(0, chopFront.search(";"));
-  return result;
-}
+let html = await getHTML();
+let $ = load(html);
 
-function cut(str, cutStart, cutEnd) {
-  return str.substr(0, cutStart) + str.substr(cutEnd + 1);
-}
+const descriptionData = $('meta[name="description"]');
+// console.log(a[0].attribs.content);
 
-function cutFromString(oldStrRegex, fullStr) {
-  return fullStr.replace(oldStrRegex, "");
-}
-
-let url = "https://www.jstor.org/stable/30216523";
-
-const html = await getHtml(url);
-
-const $ = cheerio.load(html);
-var text = $('[data-analytics-provider="ga"]').text();
-
-const pattern = /gaData\.content = \{[\s\S]*?\};/;
-const matches = text.match(pattern);
-
-console.log(matches[0]);
-
-// var result = JSON.parse(res);
-
-// console.log(result);
+const uuid = $("div #cdt")[0].attribs["data-content-id"];
+const data = await axios.get("https://www.jstor.org/citation/text/" + uuid);
+console.log(data.data);
