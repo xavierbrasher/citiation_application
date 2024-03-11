@@ -1,0 +1,5 @@
+{
+  "types": {
+    "article": "<authorSurname> , <initials> (<year>) <title> <i><journal></i>, <volume> (<number>), pp.<pages> Available at: <data.URL>. (Accessed: <urldate> +)."
+  }
+}
