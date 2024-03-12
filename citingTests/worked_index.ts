@@ -20,8 +20,8 @@ const headers = {
     "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36",
 };
 
-var main1 = "https://www.jstor.org/stable/30216523";
-var page = axios.get(main1, {
+const main1 = "https://www.jstor.org/stable/30216523";
+const page = axios.get(main1, {
   headers: headers,
 });
 
@@ -32,8 +32,8 @@ const getHTML = async () => {
 export default getData;
 
 async function getData() {
-  let html = await getHTML();
-  let $ = load(html);
+  const html = await getHTML();
+  const $ = load(html);
 
   const descriptionData = $('meta[name="description"]');
   // console.log(a[0].attribs.content);
