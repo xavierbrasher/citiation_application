@@ -9,6 +9,7 @@
     "start": "ts-node-esm ./index.ts"
   },
   "dependencies": {
+    "@orcid/bibtex-parse-js": "^0.0.25",
     "axios": "^1.6.7",
     "bibtex-js-parser": "^1.1.6",
     "cheerio": "^1.0.0-rc.12",

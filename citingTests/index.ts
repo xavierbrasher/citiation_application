@@ -4,7 +4,9 @@ import getData from "./worked_index.ts";
 import { getInitals, getSurname } from "./initals.ts";
 import citingTypes from "./citingTypes.json" assert { type: "json" };
 
-const parsed = BibtexParser.parseToJSON((await getData()).data);
+const parsed = BibtexParser.parseToJSON(
+  (await getData("https://www.jstor.org/stable/resrep46366.15")).data
+);
 
 function getDataFromEntry(text: string, data: Entry) {
   if (text == "i" || text == "/i") {
@@ -48,5 +50,5 @@ function parseData(data: Entry) {
   return cited_string;
 }
 
-console.log(parsed[0]);
+console.log(parsed);
 console.log(parseData(parsed[0]));
