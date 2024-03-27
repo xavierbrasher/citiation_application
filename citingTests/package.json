@@ -9,10 +9,12 @@
     "start": "ts-node-esm ./index.ts"
   },
   "dependencies": {
+    "@citation-js/core": "^0.7.9",
     "@orcid/bibtex-parse-js": "^0.0.25",
     "axios": "^1.6.7",
     "bibtex-js-parser": "^1.1.6",
     "cheerio": "^1.0.0-rc.12",
+    "citation.js": "^0.4.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.2"
   }

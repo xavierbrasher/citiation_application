@@ -3,10 +3,13 @@ import type { Entry } from "bibtex-js-parser";
 import getData from "./worked_index.ts";
 import { getInitals, getSurname } from "./initals.ts";
 import citingTypes from "./citingTypes.json" assert { type: "json" };
+import parseBibtext from "./lib/BibtextoJson.ts";
 
-const parsed = BibtexParser.parseToJSON(
-  (await getData("https://www.jstor.org/stable/resrep46366.15")).data
-);
+const test = (await getData("https://www.jstor.org/stable/j.ctv1wvncxk.31"))
+  .data;
+// const test = (await getData("https://www.jstor.org/stable/40379722")).data;
+
+console.log(parseBibtext(test));
 
 function getDataFromEntry(text: string, data: Entry) {
   if (text == "i" || text == "/i") {
@@ -50,5 +53,5 @@ function parseData(data: Entry) {
   return cited_string;
 }
 
-console.log(parsed);
-console.log(parseData(parsed[0]));
+// console.log(parsed);
+// console.log(parseData(parsed[0]));

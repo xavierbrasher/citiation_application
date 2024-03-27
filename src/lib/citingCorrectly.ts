@@ -1,5 +1,6 @@
 import citingTypes from "./citingTypes.json";
 
+
 const getSurname = (author: string) => {
   const splitd = author.split(" ");
   return splitd[splitd.length - 1];
