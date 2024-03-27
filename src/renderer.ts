@@ -1,5 +1,7 @@
 import "./index.css";
 
+const history = [];
+
 type data = {
   scrapeSite: (url: string) => any;
 };
@@ -15,6 +17,15 @@ function validateURL(url: string) {
   );
 }
 
+function addToHistory(newItem: string) {
+  // can you change this to add it to top of list
+  history.unshift(newItem);
+  const historyList = document.getElementById("history");
+  const li = document.createElement("li");
+  li.innerHTML = newItem;
+  historyList.innerHTML = li.outerHTML + historyList.innerHTML;
+}
+
 submit_button.onclick = async (e) => {
   const text = url_text.value;
   const validUrl = validateURL(text);
@@ -27,6 +38,6 @@ submit_button.onclick = async (e) => {
 
   const response = await data.scrapeSite(text);
 
-  document.getElementById("res").innerHTML = response;
-
+  // document.getElementById("res").innerHTML = response;
+  addToHistory(response);
 };

@@ -1,8 +1,7 @@
 import { app, BrowserWindow, ipcMain } from "electron";
 import path from "path";
-import getCitationData from "./lib/scraping";
-import articleCite from "./lib/citingCorrectly";
-import citingCorrectly from "./lib/citingCorrectly";
+import getCitationData from "./util/scraping";
+import cite from "./util/cite";
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -16,7 +15,7 @@ const createWindow = () => {
     height: 800,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
-    }
+    },
   });
 
   // and load the index.html of the app.
@@ -38,17 +37,7 @@ const createWindow = () => {
 app.on("ready", createWindow);
 
 ipcMain.handle("scrapeSite", async (event, url: string) => {
-  const res = await getCitationData(url);
-  return citingCorrectly(res);
-});
-
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
-app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
-    app.quit();
-  }
+  return await cite(url);
 });
 
 app.on("activate", () => {

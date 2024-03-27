@@ -1,6 +1,7 @@
 {
   "types": {
-    "article": "<authorSurname>, <initials>(<year>) '<title>' <i><journal></i>, <volume> (<number>), pp.<pages> Available at: <URL>. (Accessed: <urldate>).",
+    "article": "<authorSurname>, <initials>(<year>) '<title>' <i><journal></i>, <volume> (<number>), pp.<pages> Available at: <url>. (Accessed: <urldate>).",
+    "inbook": "<authorSurname>, <initials>(<year>) <i><title>, <booktitle>.</i> <edition>. <publisher>. Available at: <url>. (Accessed: <urldate>).",
     "techreport": ""
   }
 }

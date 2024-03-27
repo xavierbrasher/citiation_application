@@ -1,12 +1,12 @@
 {
   "name": "citingTests",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.ts",
   "type": "module",
   "module": "esnext",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node-esm ./index.ts"
+    "start": "tsx index.ts"
   },
   "dependencies": {
     "@citation-js/core": "^0.7.9",
@@ -17,5 +17,8 @@
     "citation.js": "^0.4.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.2"
+  },
+  "devDependencies": {
+    "tsx": "^4.7.1"
   }
 }

@@ -1,8 +1,7 @@
 import { load } from "cheerio";
 import axios from "axios";
 import type { CheerioAPI } from "cheerio";
-// @ts-ignore
-import BibtexParser from "@orcid/bibtex-parse-js";
+import parseBibtext from "./bibtextToJson";
 
 const headers = {
   Accept:
@@ -30,8 +29,7 @@ const getDataFromJSTOR = async (url: string, $: CheerioAPI) => {
   const data = (await axios.get("https://www.jstor.org/citation/text/" + uuid))
     .data;
 
-  const DataJson = BibtexParser.toJSON(data);
-  return DataJson[0];
+  return parseBibtext(data);
 };
 
 const getCitationData = async (url: string) => {

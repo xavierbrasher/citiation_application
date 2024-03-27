@@ -1,19 +1,21 @@
-import { BibtexParser } from "bibtex-js-parser";
-import type { Entry } from "bibtex-js-parser";
 import getData from "./worked_index.ts";
 import { getInitals, getSurname } from "./initals.ts";
 import citingTypes from "./citingTypes.json" assert { type: "json" };
 import parseBibtext from "./lib/BibtextoJson.ts";
+import type { BibtextType } from "./lib/BibtextoJson.ts";
 
 const test = (await getData("https://www.jstor.org/stable/j.ctv1wvncxk.31"))
   .data;
 // const test = (await getData("https://www.jstor.org/stable/40379722")).data;
 
-console.log(parseBibtext(test));
+const parsed = parseBibtext(test);
 
-function getDataFromEntry(text: string, data: Entry) {
+function getDataFromEntry(text: string, data: BibtextType) {
   if (text == "i" || text == "/i") {
     return "<" + text + ">";
+  }
+  if (text == "edition") {
+    return "Edition " + data.volume?.split(".")[1] || "NULL";
   }
   if (text == "authorSurname") {
     return getSurname(data.author || "NULL NULL");
@@ -25,7 +27,7 @@ function getDataFromEntry(text: string, data: Entry) {
   return data[text as keyof typeof data];
 }
 
-function parseData(data: Entry) {
+function parseData(data: BibtextType) {
   const citingStr =
     citingTypes.types[data.type as keyof typeof citingTypes.types];
   console.log(citingStr);
@@ -53,5 +55,5 @@ function parseData(data: Entry) {
   return cited_string;
 }
 
-// console.log(parsed);
-// console.log(parseData(parsed[0]));
+console.log(parsed);
+console.log(parseData(parsed));
