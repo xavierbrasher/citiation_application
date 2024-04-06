@@ -16,93 +16,27 @@ const getInitals = (author: string) => {
   return initals;
 };
 
-// const articleCite = (entry: any) => {
-//   const data = entry.entryTags;
-//   if (!data.author) {
-//     return (
-//       "NO AUTHOR (" +
-//       data.year +
-//       ") '" +
-//       data.title +
-//       "', <i>" +
-//       data.journal +
-//       "</i>, " +
-//       data.volume +
-//       "(" +
-//       data.number +
-//       "), pp." +
-//       data.pages +
-//       ". Available at: " +
-//       data.URL +
-//       ". (Accessed: " +
-//       data.urldate +
-//       ")."
-//     );
-//   }
-//   const authorSurname = getSurname(data.author);
-//   const initials = getInitals(data.author);
-//   if (data.number) {
-//     return (
-//       authorSurname +
-//       ", " +
-//       initials +
-//       " (" +
-//       data.year +
-//       ") '" +
-//       data.title +
-//       "', <i>" +
-//       data.journal +
-//       "</i>, " +
-//       data.volume +
-//       "(" +
-//       data.number +
-//       "), pp." +
-//       data.pages +
-//       ". Available at: " +
-//       data.URL +
-//       ". (Accessed: " +
-//       data.urldate +
-//       ")."
-//     );
-//   } else {
-//     return (
-//       authorSurname +
-//       ", " +
-//       initials +
-//       " (" +
-//       data.year +
-//       ") '" +
-//       data.title +
-//       "', <i>" +
-//       data.journal +
-//       "</i>, " +
-//       data.volume +
-//       ", pp." +
-//       data.pages +
-//       ". Available at: " +
-//       data.URL +
-//       ". (Accessed: " +
-//       data.urldate +
-//       ")."
-//     );
-//   }
-// };
-
 function getDataFromEntry(text: string, data: BibtextType) {
   if (text == "i" || text == "/i") {
     return "<" + text + ">";
   }
   if (text == "edition") {
-    return "Edition " + data.volume?.split(".")[1] || "NULL";
+    return "Edition " + data.volume?.split(".")[1] || "EDITION";
   }
   if (text == "authorSurname") {
-    return getSurname(data.author || "NULL NULL");
+    return getSurname(data.author || "AUTHORSURNAME");
   }
   if (text == "initials") {
-    return getInitals(data.author || "NULL NULL");
+    return getInitals(data.author || "INITIALS");
   }
 
-  return data[text as keyof typeof data];
+  const output = data[text as keyof typeof data];
+
+  if (output == null || output == "") {
+    return text.toUpperCase();
+  }
+
+  return output;
 }
 
 function parseData(data: BibtextType) {
@@ -134,8 +68,6 @@ function parseData(data: BibtextType) {
 
 async function cite(url: string) {
   const res = await getCitationData(url);
-  console.log(res);
-
   return parseData(res);
 }
 
