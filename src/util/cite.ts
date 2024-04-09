@@ -39,7 +39,7 @@ function getDataFromEntry(text: string, data: BibtextType) {
   return output;
 }
 
-function parseData(data: BibtextType) {
+export function parseData(data: BibtextType) {
   const citingStr =
     citingTypes.types[data.type as keyof typeof citingTypes.types];
   let cited_string = "";

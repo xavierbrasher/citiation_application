@@ -5,17 +5,27 @@
     <title>Hello World!</title>
   </head>
   <body>
-    <h1>Citation Application</h1>
-    <h2>Cite something new?</h>
-    <div class="row2">
-      <textarea placeholder="URL" id="url_text"></textarea>
-      <button id="submit_button">Submit</button>
-    </div>
-    <span id="res"></span>
+    <div class="tabcontent" id="home">
+      <h1>Citation Application</h1>
+      <h2>Cite something new?</h>
+      <button id="custom_bibtex_input_button">Custom Bibtex Input</button>
+      <div class="row2">
+        <textarea placeholder="URL" id="url_text"></textarea>
+        <button class="website_submit_button" id="submit_button">Submit</button>
+      </div>
+      <span id="res"></span>
 
-    <h2>History</h2>
-    <ul id="history">
-    </ul>
-    <script type="module" src="/src/renderer.ts"></script>
+      <h2>History</h2>
+      <ul id="history">
+      </ul>
+    </div>
+
+    <div class="tabcontent hidden" id="custom_bibtex_input">
+      <h1>Custom Bibtex Input</h1>
+      <textarea id="bibtex_input"></textarea>
+      <button id="bibtex_submit">Submit</button>
+      <span id="bibtex_res"></span>
+    </div>
+    <script defer type="module" src="../src/renderer.ts"></script>
   </body>
 </html>

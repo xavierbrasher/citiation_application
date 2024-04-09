@@ -1,7 +1,10 @@
 import { app, BrowserWindow, ipcMain } from "electron";
 import path from "path";
 import getCitationData from "./util/scraping";
-import cite from "./util/cite";
+import cite, { parseData } from "./util/cite";
+import { readFile } from "node:fs";
+import { readFileSync } from "fs";
+import parseBibtext from "./util/bibtextToJson";
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -40,6 +43,15 @@ app.on("ready", createWindow);
 
 ipcMain.handle("scrapeSite", async (event, url: string) => {
   return await cite(url);
+});
+
+ipcMain.handle("getFileData", async (event, view: string) => {
+  return await readFileSync(+__dirname + "/..//" + view, "utf-8");
+});
+
+ipcMain.handle("scrapeBibtex", async (event, bibtex: string) => {
+  const parsed = parseBibtext(bibtex);
+  return parseData(parsed);
 });
 
 app.on("activate", () => {
