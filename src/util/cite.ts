@@ -16,6 +16,25 @@ const getInitals = (author: string) => {
   return initals;
 };
 
+const author = (author: string) => {
+  // check if ends with et el
+  let hasEtEl = false;
+
+  if (author.endsWith(" et al.")) {
+    author = author.slice(0, -7);
+    hasEtEl = true;
+  }
+
+  return (
+    getSurname(author) + ", " + getInitals(author) + (hasEtEl ? " et al. " : "")
+  );
+};
+
+const getDate = () => {
+  const date = new Date();
+  return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
+};
+
 function getDataFromEntry(text: string, data: BibtextType) {
   if (text == "i" || text == "/i") {
     return "<" + text + ">";
@@ -23,15 +42,14 @@ function getDataFromEntry(text: string, data: BibtextType) {
   if (text == "edition") {
     return "Edition " + data.volume?.split(".")[1] || "EDITION";
   }
-  if (text == "authorSurname") {
-    return getSurname(data.author || "AUTHORSURNAME");
+  if (text == "author") {
+    return author(data.author) || "AUTHOR";
   }
-  if (text == "initials") {
-    return getInitals(data.author || "INITIALS");
+  if (text == "urldate") {
+    return getDate();
   }
 
   const output = data[text as keyof typeof data];
-
   if (output == null || output == "") {
     return text.toUpperCase();
   }

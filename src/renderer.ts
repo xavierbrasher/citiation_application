@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import "./index.css";
 
 const bibtex_input_button = document.getElementById(
@@ -7,22 +8,26 @@ const submit_button = document.getElementById("submit_button");
 const url_text = document.getElementById("url_text");
 const bibtex_input = document.getElementById("bibtex_input");
 const bibtex_submit = document.getElementById("bibtex_submit");
+const bibtex_back = document.getElementById("bibtex_back");
+
+bibtex_back.onclick = (e) => {
+  router(e, "home");
+};
 
 bibtex_submit.onclick = async (e) => {
   const text = bibtex_input.value;
   const validBibtex = true;
 
-  if (!validBibtex) {
+  try {
+    const response = await data.scrapeBibtex(text);
+    // document.getElementById("res").innerHTML = response;
+    addToHistory(response);
+    router(e, "home");
+  } catch {
     bibtex_input.value = "";
     bibtex_input.placeholder = "Please enter valid bibtex";
     return;
   }
-
-  const response = await data.scrapeBibtex(text);
-
-  // document.getElementById("res").innerHTML = response;
-  addToHistory(response);
-  router(e, "home");
 };
 
 bibtex_input.addEventListener("input", (ev) => {

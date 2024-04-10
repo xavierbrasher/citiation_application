@@ -1,3 +1,6 @@
+import { i } from "vite/dist/node/types.d-jgA8ss1A";
+import { parseData } from "./cite";
+
 export type BibtextType = {
   id: string;
   type: string;
@@ -46,6 +49,29 @@ const checkValue = (val: string) => {
   return output;
 };
 
+const handleAuthor = (author: string) => {
+  let mutilatedAuthor = author;
+  let needsEtEl = false;
+  if (author.includes("\n")) {
+    mutilatedAuthor = author.split("\n")[0];
+    if (mutilatedAuthor.endsWith(" and")) {
+      mutilatedAuthor = mutilatedAuthor.slice(0, -4);
+      needsEtEl = true;
+    }
+  }
+
+  if (mutilatedAuthor.includes(" and ")) {
+    mutilatedAuthor = mutilatedAuthor.split(" and ")[0];
+    needsEtEl = true;
+  }
+
+  if (needsEtEl) {
+    mutilatedAuthor += " et al.";
+  }
+
+  return mutilatedAuthor;
+};
+
 export default function parseBibtext(bibtext: string): BibtextType {
   // if (!false) {
   //   throw new Error("Invalid bibtext format");
@@ -72,7 +98,8 @@ export default function parseBibtext(bibtext: string): BibtextType {
     if (trimmedKey == "title") {
       parsedData.title = trimmedValue;
     } else if (trimmedKey == "author") {
-      parsedData.author = trimmedValue;
+      parsedData.author = handleAuthor(trimmedValue);
+      console.log(parsedData.author);
     } else if (trimmedKey == "year") {
       parsedData.year = trimmedValue;
     } else if (trimmedKey == "journal") {
@@ -96,7 +123,18 @@ export default function parseBibtext(bibtext: string): BibtextType {
     } else if (trimmedKey == "url") {
       parsedData.url = trimmedValue;
     } else if (trimmedKey == "urldate") {
-      parsedData.urldate = trimmedValue;
+      if (trimmedValue == "URLDATE") {
+        // set parsedData.urldate to the current date in the format dd/mm/yyyy
+        const date = new Date();
+        const day = date.getDate();
+        const month = date.getMonth() + 1;
+        const year = date.getFullYear();
+        parsedData.urldate = `${day}/${month}/${year}`;
+        console.log(parsedData.urldate);
+      } else {
+        parsedData.urldate = trimmedValue;
+        console.log(parsedData.urldate);
+      }
     }
   }
 
