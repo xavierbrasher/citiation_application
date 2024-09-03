@@ -52,7 +52,7 @@ export default function parseBibtext(bibtext: string): BibtextType {
   // }
 
   const fields = bibtext.split(",\n");
-  console.log(fields);
+  // console.log(fields);
 
   const parsedData: Partial<BibtextType> = {};
 

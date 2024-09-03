@@ -51,7 +51,7 @@ function router(e: any, route: string) {
     tabcontent[i].className = "tabcontent hidden";
   }
   const newRoute = document.getElementById(route);
-  console.log(newRoute);
+  // console.log(newRoute);
 
   newRoute.className = "tabcontent";
 }
@@ -91,3 +91,16 @@ function auto_grow(element: any) {
   element.style.height = "2rem";
   element.style.height = element.scrollHeight + "px";
 }
+
+(async () => {
+  try {
+    const citaions = await data.read_cite_data();
+    console.log(citaions);
+
+    // for (const [index, key] of Object.keys(citaions).entries()) {
+    // }
+  } catch (e) {
+    // console.log(e);
+  }
+  // `text` is not available here
+})();

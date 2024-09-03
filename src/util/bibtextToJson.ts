@@ -99,7 +99,7 @@ export default function parseBibtext(bibtext: string): BibtextType {
       parsedData.title = trimmedValue;
     } else if (trimmedKey == "author") {
       parsedData.author = handleAuthor(trimmedValue);
-      console.log(parsedData.author);
+      // console.log(parsedData.author);
     } else if (trimmedKey == "year") {
       parsedData.year = trimmedValue;
     } else if (trimmedKey == "journal") {
@@ -130,10 +130,10 @@ export default function parseBibtext(bibtext: string): BibtextType {
         const month = date.getMonth() + 1;
         const year = date.getFullYear();
         parsedData.urldate = `${day}/${month}/${year}`;
-        console.log(parsedData.urldate);
+        // console.log(parsedData.urldate);
       } else {
         parsedData.urldate = trimmedValue;
-        console.log(parsedData.urldate);
+        // console.log(parsedData.urldate);
       }
     }
   }

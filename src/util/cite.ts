@@ -35,6 +35,11 @@ const getDate = () => {
   return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
 };
 
+const handlePage = (page: string) => {
+  const copied_page = page.split("--");
+  return copied_page.join("-");
+};
+
 function getDataFromEntry(text: string, data: BibtextType) {
   if (text == "i" || text == "/i") {
     return "<" + text + ">";
@@ -49,6 +54,10 @@ function getDataFromEntry(text: string, data: BibtextType) {
     return getDate();
   }
 
+  if (text == "pages") {
+    return handlePage(data.pages);
+  }
+
   const output = data[text as keyof typeof data];
   if (output == null || output == "") {
     return text.toUpperCase();
@@ -58,6 +67,8 @@ function getDataFromEntry(text: string, data: BibtextType) {
 }
 
 export function parseData(data: BibtextType) {
+  // console.log(data);
+
   const citingStr =
     citingTypes.types[data.type as keyof typeof citingTypes.types];
   let cited_string = "";

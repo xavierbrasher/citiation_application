@@ -32,5 +32,5 @@ const config = {
 let url = "https://example.com";
 
 axios.get(url, config).then((res) => {
-  console.log(res.data);
+  // console.log(res.data);
 });

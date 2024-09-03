@@ -50,7 +50,7 @@ let numbers = [0];
 for (let i = 1; i <= 31; i++) {
   numbers[i] = i;
 }
-console.log(numbers);
+// console.log(numbers);
 
 let first = "";
 

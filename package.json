@@ -21,6 +21,7 @@
     "@electron-forge/plugin-fuses": "^7.2.0",
     "@electron-forge/plugin-vite": "^7.3.0",
     "@electron/fuses": "^1.7.0",
+    "@types/electron-json-storage": "^4.5.4",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "electron": "29.1.0",
@@ -41,7 +42,9 @@
     "@types/node": "*",
     "axios": "^1.6.7",
     "cheerio": "^1.0.0-rc.12",
+    "electron-json-storage": "^4.6.0",
     "electron-squirrel-startup": "^1.0.0",
     "minimist": "^1.2.8"
-  }
+  },
+  "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
 }

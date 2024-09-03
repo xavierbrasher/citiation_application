@@ -30,7 +30,7 @@ function getDataFromEntry(text: string, data: BibtextType) {
 function parseData(data: BibtextType) {
   const citingStr =
     citingTypes.types[data.type as keyof typeof citingTypes.types];
-  console.log(citingStr);
+  // console.log(citingStr);
   let cited_string = "";
   let opened = false;
   let text = "";
@@ -55,5 +55,5 @@ function parseData(data: BibtextType) {
   return cited_string;
 }
 
-console.log(parsed);
-console.log(parseData(parsed));
+// console.log(parsed);
+// console.log(parseData(parsed));
