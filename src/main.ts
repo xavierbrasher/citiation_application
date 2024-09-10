@@ -47,13 +47,16 @@ let citations: BibtextType[] = [];
 
 ipcMain.handle("scrapeSite", async (event, url: string) => {
   const citation_data = await getCitationData(url);
-  citations.push(citation_data);
+  if (typeof citation_data == "number") {
+    return citation_data
+  }
+  citations = [...citations, citation_data];
   save_cite_data(citations);
   return parseData(citation_data);
 });
 
 ipcMain.handle("getFileData", async (event, view: string) => {
-  return await readFileSync(+__dirname + "/..//" + view, "utf-8");
+  return readFileSync(+__dirname + "/..//" + view, "utf-8");
 });
 
 ipcMain.handle("scrapeBibtex", async (event, bibtex: string) => {

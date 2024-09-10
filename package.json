@@ -44,6 +44,7 @@
     "cheerio": "^1.0.0-rc.12",
     "electron-json-storage": "^4.6.0",
     "electron-squirrel-startup": "^1.0.0",
+    "electron-store": "^10.0.0",
     "minimist": "^1.2.8"
   },
   "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"

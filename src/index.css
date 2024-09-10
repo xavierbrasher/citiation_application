@@ -2,10 +2,12 @@
   color: #0a497c;
   /* color: #6436a5; */
 }
+
 @keyframes fadeEffect {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -21,14 +23,18 @@ body {
   font-size: large;
 }
 
-textarea {
+.url_input {
   width: 90%;
   border: black 1px solid;
   padding-left: 10px;
   padding-top: 10px;
   border-radius: 10px;
-  background-color: #d9d9d9;
+  /*background-color: #d9d9d9;*/
+
+  background: 50%;
+
   resize: none;
+
   height: 2rem;
 }
 
@@ -41,7 +47,8 @@ textarea {
 }
 
 .tabcontent {
-  animation: fadeEffect 1s; /* Fading effect takes 1 second */
+  animation: fadeEffect 1s;
+  /* Fading effect takes 1 second */
 }
 
 .hidden {
@@ -61,6 +68,7 @@ textarea {
   text-align: center;
   font-weight: bold;
 }
+
 button {
   width: 25%;
   background-color: #d9d9d9;

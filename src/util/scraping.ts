@@ -1,5 +1,5 @@
 import { load } from "cheerio";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import type { CheerioAPI } from "cheerio";
 import parseBibtext from "./bibtextToJson";
 
@@ -33,15 +33,24 @@ const getDataFromJSTOR = async (url: string, $: CheerioAPI) => {
 };
 
 const getCitationData = async (url: string) => {
-  const page = axios.get(url, {
-    headers: headers,
-  });
+  try {
+    const page = await axios.get(url, {
+      headers: headers,
+    });
+    const html = page.data;
+    const $ = load(html);
+    if (url.includes("https://www.jstor.org")) {
+      return await getDataFromJSTOR(url, $);
+    }
 
-  const html = (await page).data;
-  const $ = load(html);
-  if (url.includes("https://www.jstor.org")) {
-    return await getDataFromJSTOR(url, $);
+  } catch (error) {
+    console.log("\n\n\nERROR:\n\n\n" + error);
+
+    const code = error.toString().slice(-3)
+    return Number(code)
   }
+
+
 };
 
 export default getCitationData;

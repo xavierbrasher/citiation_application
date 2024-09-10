@@ -1,32 +1,35 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Hello World!</title>
-  </head>
-  <body>
-    <div class="tabcontent" id="home">
-      <h1>Citation Application</h1>
-      <h2>Cite something new?</h>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Hello World!</title>
+</head>
+
+<body>
+  <div class="tabcontent" id="home">
+    <h1>Citation Application</h1>
+    <h2>Cite something new?</form>
       <button id="custom_bibtex_input_button">Custom Bibtex Input</button>
-      <div class="row2">
-        <textarea placeholder="URL" id="url_text"></textarea>
-        <button class="website_submit_button" id="submit_button">Submit</button>
-      </div>
-      <span id="res"></span>
+      <form id="url_form" class="row2">
+        <input type="text" placeholder="URL" id="url_text" class="url_input" />
+        <input type="submit" class="website_submit_button" id="submit_button" />
+      </form>
+      <span id="error_field"></span>
 
       <h2>History</h2>
       <ul id="history">
       </ul>
-    </div>
+  </div>
 
-    <div class="tabcontent hidden" id="custom_bibtex_input">
-      <h1>Custom Bibtex Input</h1>
-      <textarea id="bibtex_input"></textarea>
-      <button id="bibtex_submit">Submit</button>
-      <button id="bibtex_back">Back</button>
-      <span id="bibtex_res"></span>
-    </div>
-    <script defer type="module" src="/src/renderer.ts"></script>
-  </body>
+  <div class="tabcontent hidden" id="custom_bibtex_input">
+    <h1>Custom Bibtex Input</h1>
+    <textarea id="bibtex_input"></textarea>
+    <button id="bibtex_submit">Submit</button>
+    <button id="bibtex_back">Back</button>
+    <span id="bibtex_res"></span>
+  </div>
+  <script defer type="module" src="/src/renderer.ts"></script>
+</body>
+
 </html>

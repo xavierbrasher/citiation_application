@@ -1,40 +1,47 @@
-import parseBibtext, { BibtextType } from "./bibtextToJson";
+import electron from 'electron';
+import fs from 'fs';
+import path from 'path';
+import parseBibtext, { BibtextType } from './bibtextToJson';
 
-import storage from "electron-json-storage";
+const dataPath = electron.app.getPath('userData');
+const filePath = path.join(dataPath, 'config.json');
 
-const defaultDataPath = storage.getDefaultDataPath();
+export const read_cite_data = async () => {
 
-export const save_cite_data = async (citations: BibtextType[]) => {
-  storage.setDataPath(defaultDataPath);
+  console.log(filePath);
 
-  await storage.set("data", citations, (error) => {
-    throw error;
-  });
-};
+  let responce = ""
+  fs.readFile(filePath, "utf-8", (err, string) => {
+    if (err) {
+      console.debug(err);
 
-const parse_data_one_object = (data: object) => {
-  const bibtext: BibtextType = { id: "", raw: "", title: "", type: "" };
-
-  for (const [index, key] of Object.keys(data).entries()) {
-    bibtext[key as keyof typeof bibtext] = data[key as keyof typeof data];
-  }
-  return bibtext;
-};
-
-export async function read_cite_data() {
-  let arr: BibtextType[] = [];
-  arr = [];
-
-  await storage.get("data", (err, data) => {
-    if (err) throw err;
-
-    for (const [index, key] of Object.keys(data).entries()) {
-      arr.push(parseBibtext(data[key].raw));
+      return
     }
-    // console.log(arr);
+    responce = JSON.parse(responce)
+    console.debug(responce);
 
-    return arr;
-  });
+  })
 
-  return arr;
+  console.log(responce);
+  let new_res: BibtextType[] = []
+
+  for (let i = 0; i < responce.length; i++) {
+    new_res = [...new_res, parseBibtext(responce[i])]
+  }
+
+
+  return new_res
+}
+
+export const save_cite_data = (data: BibtextType[]) => {
+  const string_json_data = JSON.stringify(data)
+  console.debug("PARSE WORKED" + JSON.parse(string_json_data))
+
+  fs.writeFile(filePath, string_json_data, (err) => {
+    if (err) {
+      console.log(err);
+      return
+    }
+  })
+
 }

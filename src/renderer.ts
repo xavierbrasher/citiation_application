@@ -5,6 +5,8 @@ const bibtex_input_button = document.getElementById(
   "custom_bibtex_input_button"
 );
 const submit_button = document.getElementById("submit_button");
+const error_field = document.getElementById("error_field")
+const submit_form = document.getElementById("url_form");
 const url_text = document.getElementById("url_text");
 const bibtex_input = document.getElementById("bibtex_input");
 const bibtex_submit = document.getElementById("bibtex_submit");
@@ -55,8 +57,8 @@ function router(e: any, route: string) {
 
   newRoute.className = "tabcontent";
 }
-
-submit_button.onclick = async (e) => {
+submit_form.onsubmit = async (e) => {
+  e.preventDefault()
   const text = url_text.value;
 
   const validUrl = validateURL(text);
@@ -69,9 +71,15 @@ submit_button.onclick = async (e) => {
 
   const response = await data.scrapeSite(text);
 
+  if (typeof response == "number") {
+    error_field.innerHTML = response.toString()
+    return
+  }
+
   // document.getElementById("res").innerHTML = response;
   addToHistory(response);
 };
+
 
 function addToHistory(newItem: string) {
   // can you change this to add it to top of list
