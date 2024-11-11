@@ -16,6 +16,27 @@ bibtex_back.onclick = (e) => {
   router(e, "home");
 };
 
+const load_startup = async () => {
+  try {
+    console.log("here");
+    const citaions = await data.read_cite_data();
+    console.log(citaions);
+
+
+    for (let i = 0; i < citaions.length(); i++) {
+      addToHistory(citaions[i])
+      console.log(citaions[i]);
+    }
+  } catch (e) {
+    console.log(e);
+  }
+  // `text` is not available here
+}
+
+await load_startup()
+
+
+
 bibtex_submit.onclick = async (e) => {
   const text = bibtex_input.value;
   const validBibtex = true;
@@ -75,6 +96,9 @@ submit_form.onsubmit = async (e) => {
     error_field.innerHTML = response.toString()
     return
   }
+  else {
+    error_field.innerHTML = ""
+  }
 
   // document.getElementById("res").innerHTML = response;
   addToHistory(response);
@@ -100,15 +124,3 @@ function auto_grow(element: any) {
   element.style.height = element.scrollHeight + "px";
 }
 
-(async () => {
-  try {
-    const citaions = await data.read_cite_data();
-    console.log(citaions);
-
-    // for (const [index, key] of Object.keys(citaions).entries()) {
-    // }
-  } catch (e) {
-    // console.log(e);
-  }
-  // `text` is not available here
-})();

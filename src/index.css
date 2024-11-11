@@ -23,6 +23,12 @@ body {
   font-size: large;
 }
 
+.error {
+  color: red;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
 .url_input {
   width: 90%;
   border: black 1px solid;
