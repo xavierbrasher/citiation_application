@@ -1,3 +1,4 @@
+import { warn } from "node:console";
 import { fileURLToPath } from "node:url";
 import "./index.css";
 
@@ -17,23 +18,16 @@ bibtex_back.onclick = (e) => {
 };
 
 const load_startup = async () => {
-  try {
-    console.log("here");
-    const citaions = await data.read_cite_data();
-    console.log(citaions);
+  const loaded_citations = await data.readCitationData().then((data: string[]) => data);
 
-
-    for (let i = 0; i < citaions.length(); i++) {
-      addToHistory(citaions[i])
-      console.log(citaions[i]);
-    }
-  } catch (e) {
-    console.log(e);
+  for (const citation of loaded_citations) {
+    addToHistory(citation)
   }
-  // `text` is not available here
 }
 
-await load_startup()
+load_startup().then(() => {
+  console.log("done");
+})
 
 
 

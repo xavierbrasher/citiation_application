@@ -1,8 +1,7 @@
-import { app, BrowserWindow, ipcMain, ipcRenderer } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
 import path from "path";
 import getCitationData from "./util/scraping";
-import cite, { parseData } from "./util/cite";
-import { readFile } from "node:fs";
+import { parseData } from "./util/cite";
 import { readFileSync } from "fs";
 import parseBibtext, { BibtextType } from "./util/bibtextToJson";
 import { read_cite_data, save_cite_data } from "./util/saveCitations";
@@ -68,15 +67,29 @@ ipcMain.handle("saveCitationData", async (event) => {
   save_cite_data(citations);
 });
 
+ipcMain.handle("readthing", async (event) => {
+  citations = await read_cite_data();
+  let parsedCitations: string[] = [];
+  for (let i = 0; i < citations.length; i++) {
+    parsedCitations = [...parsedCitations, parseData(citations[i])]
+  }
+
+  console.log(parsedCitations);
+
+  return parsedCitations
+
+})
+
 ipcMain.handle("readCitationData", async (event) => {
-  // console.log(await read_cite_data());
-  setTimeout(async () => {
-    citations = await read_cite_data();
+  citations = await read_cite_data();
+  let parsedCitations: string[] = [];
+  for (let i = 0; i < citations.length; i++) {
+    parsedCitations = [...parsedCitations, parseData(citations[i])]
+  }
 
-    console.log(await read_cite_data());
+  console.log(parsedCitations);
 
-    return await read_cite_data();
-  }, 500);
+  return parsedCitations
 });
 
 app.on("activate", () => {

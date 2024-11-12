@@ -1,38 +1,25 @@
 import electron from 'electron';
-import fs from 'fs';
+import fs, { readFile } from 'fs';
 import path from 'path';
 import parseBibtext, { BibtextType } from './bibtextToJson';
 
 const dataPath = electron.app.getPath('userData');
 const filePath = path.join(dataPath, 'config.json');
 
+const read_file = () => {
+  return fs.readFileSync(filePath, "utf-8")
+}
 export const read_cite_data = async () => {
 
-  let responce = ""
-  fs.readFile(filePath, "utf-8", async (err, string) => {
-    if (err) {
-
-      return
-    }
-    responce = string
-    console.log(string);
-
-
-  })
-
-  console.log(responce);
+  const responce = read_file()
 
   const json_res = await JSON.parse(responce)
-  console.log(json_res);
-
 
   let new_res: BibtextType[] = []
 
   for (let i = 0; i < json_res.length; i++) {
-    new_res = [...new_res, parseBibtext(json_res[i])]
+    new_res = [...new_res, parseBibtext(json_res[i].raw)]
   }
-
-  console.log(new_res);
 
 
 

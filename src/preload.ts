@@ -7,5 +7,5 @@ contextBridge.exposeInMainWorld("data", {
   scrapeSite: (url: string) => ipcRenderer.invoke("scrapeSite", url),
   getFileData: (view: string) => ipcRenderer.invoke("getFileData", view),
   scrapeBibtex: (bibtex: string) => ipcRenderer.invoke("scrapeBibtex", bibtex),
-  read_cite_data: () => ipcRenderer.invoke("readCitationData"),
-});
+  readCitationData: () => ipcRenderer.invoke("readthing"),
+}) 
