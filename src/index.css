@@ -13,6 +13,11 @@
   }
 }
 
+.noline {
+ display: inline;
+ margin: 0px;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif;
@@ -29,13 +34,28 @@ body {
   font-size: 1.5rem;
 }
 
+textarea {
+  resize: none;
+}
+.center-div {
+  display: flex;
+  align-items: center; 
+  gap: 10px;
+}
+
+.center-button {
+  margin-top: 5px;
+}
+
 .url_input {
   width: 90%;
   border: black 1px solid;
   padding-left: 10px;
-  padding-top: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   border-radius: 10px;
   /*background-color: #d9d9d9;*/
+
 
   background: 50%;
 
@@ -52,9 +72,23 @@ body {
   height: 1rem;
 }
 
+#bibtex_input {
+  width: 100%;
+}
+
 .tabcontent {
   animation: fadeEffect 1s;
   /* Fading effect takes 1 second */
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom_button {
+  margin-left: 10px
 }
 
 .hidden {
@@ -93,6 +127,7 @@ button {
 li {
   font-size: medium;
   margin-top: 1rem;
+  cursor: pointer;
 }
 
 ul {

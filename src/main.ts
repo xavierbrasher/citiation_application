@@ -1,11 +1,10 @@
-import { app, BrowserWindow, ipcMain } from "electron";
+import { app, BrowserWindow, clipboard, ipcMain } from "electron";
 import path from "path";
 import getCitationData from "./util/scraping";
 import { parseData } from "./util/cite";
 import { readFileSync } from "fs";
 import parseBibtext, { BibtextType } from "./util/bibtextToJson";
 import { read_cite_data, save_cite_data } from "./util/saveCitations";
-
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -27,13 +26,14 @@ const createWindow = () => {
     mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
   } else {
     mainWindow.loadFile(
-      path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`)
+      path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`),
     );
   }
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
   mainWindow.removeMenu();
+  mainWindow.title = "Citation Application";
   mainWindow.center();
 };
 
@@ -47,7 +47,7 @@ let citations: BibtextType[] = [];
 ipcMain.handle("scrapeSite", async (event, url: string) => {
   const citation_data = await getCitationData(url);
   if (typeof citation_data == "number") {
-    return citation_data
+    return citation_data;
   }
   citations = [...citations, citation_data];
   save_cite_data(citations);
@@ -59,37 +59,38 @@ ipcMain.handle("getFileData", async (event, view: string) => {
 });
 
 ipcMain.handle("scrapeBibtex", async (event, bibtex: string) => {
-  const parsed = parseBibtext(bibtex);
-  return parseData(parsed);
+  try {
+    const parsed = parseBibtext(bibtex);
+    const cited = parseData(parsed);
+    citations = [...citations, parsed];
+    save_cite_data(citations);
+    return cited;
+  } catch (e) {
+    return "ERROR BAM";
+  }
+});
+
+ipcMain.handle("copy", (event, text: string) => {
+  clipboard.writeHTML(text);
 });
 
 ipcMain.handle("saveCitationData", async (event) => {
   save_cite_data(citations);
 });
 
-ipcMain.handle("readthing", async (event) => {
-  citations = await read_cite_data();
-  let parsedCitations: string[] = [];
-  for (let i = 0; i < citations.length; i++) {
-    parsedCitations = [...parsedCitations, parseData(citations[i])]
-  }
-
-  console.log(parsedCitations);
-
-  return parsedCitations
-
-})
-
 ipcMain.handle("readCitationData", async (event) => {
   citations = await read_cite_data();
   let parsedCitations: string[] = [];
   for (let i = 0; i < citations.length; i++) {
-    parsedCitations = [...parsedCitations, parseData(citations[i])]
+    parsedCitations = [...parsedCitations, parseData(citations[i])];
   }
 
-  console.log(parsedCitations);
+  return parsedCitations;
+});
 
-  return parsedCitations
+ipcMain.handle("clearHistory", () => {
+  citations = [];
+  save_cite_data(citations);
 });
 
 app.on("activate", () => {
