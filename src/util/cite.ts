@@ -45,17 +45,17 @@ function getDataFromEntry(text: string, data: BibtextType) {
     return "<" + text + ">";
   }
   if (text == "edition") {
-    return "Edition " + data.volume?.split(".")[1] || "EDITION";
+    return "Edition " + data.volume?.trimStart().split(".")[1] || "EDITION";
   }
   if (text == "author") {
-    return author(data.author) || "AUTHOR";
+    return author(data.author.trimStart()) || "AUTHOR";
   }
   if (text == "urldate") {
     return getDate();
   }
 
   if (text == "pages") {
-    return handlePage(data.pages);
+    return handlePage(data.pages.trimStart());
   }
 
   const output = data[text as keyof typeof data];
@@ -63,7 +63,7 @@ function getDataFromEntry(text: string, data: BibtextType) {
     return text.toUpperCase();
   }
 
-  return output;
+  return output.trimStart();
 }
 
 export function parseData(data: BibtextType) {

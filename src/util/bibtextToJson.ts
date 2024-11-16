@@ -90,7 +90,7 @@ export default function parseBibtext(bibtext: string): BibtextType {
       parsedData.type = key.slice(1);
       continue;
     }
-    const [key, value] = field.split(" = ");
+    const [key, value] = field.split("=");
     const trimmedKey = key.trim().toLowerCase();
 
     const trimmedValue = checkValue(value.replace(/^{(.*)}$/, "$1"));
