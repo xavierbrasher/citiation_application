@@ -68,7 +68,19 @@ const getCitationData = async (url: string) => {
     console.log("\n\n\nERROR:\n\n\n" + error);
 
     const code = error.toString().slice(-3);
-    return Number(code);
+    const check_error = Number(code);
+    try {
+      const page = await axios.get(url, {
+        headers: headers,
+      });
+      const html = page.data;
+      const $ = load(html);
+      if (url.includes("https://www.jstor.org")) {
+        return await getDataFromJSTOR(url, $);
+      }
+    } catch (_error) {
+      return check_error;
+    }
   }
 };
 
