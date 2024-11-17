@@ -1,7 +1,7 @@
 import { i } from "vite/dist/node/types.d-jgA8ss1A";
 import { parseData } from "./cite";
 
-export type BibtextType = {
+export type BibtexType = {
   id: string;
   type: string;
   raw: string;
@@ -72,16 +72,16 @@ const handleAuthor = (author: string) => {
   return mutilatedAuthor;
 };
 
-export default function parseBibtext(bibtext: string): BibtextType {
+export default function parseBibtex(bibtex: string): BibtexType {
   // if (!false) {
-  //   throw new Error("Invalid bibtext format");
+  //   throw new Error("Invalid bibtex format");
   // }
 
-  const fields = bibtext.split(",\n");
+  const fields = bibtex.split(",\n");
 
-  const parsedData: Partial<BibtextType> = {};
+  const parsedData: Partial<BibtexType> = {};
 
-  parsedData.raw = bibtext;
+  parsedData.raw = bibtex;
   for (const field of fields) {
     if (field[0] == "@") {
       const [key, value] = field.split("{");
@@ -138,5 +138,5 @@ export default function parseBibtext(bibtext: string): BibtextType {
     }
   }
 
-  return parsedData as BibtextType;
+  return parsedData as BibtexType;
 }

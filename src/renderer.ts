@@ -1,6 +1,4 @@
-import { log } from "console";
 import "./index.css";
-
 const bibtex_input_button = document.getElementById(
   "custom_bibtex_input_button",
 );
@@ -66,15 +64,16 @@ type data = {
 
 function router(e: any, route: string) {
   // Get all elements with class="tabcontent" and hide them
-  const tabcontent = document.getElementsByClassName("tabcontent");
-  for (let i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].className = "tabcontent hidden";
+  const tabcontents = document.getElementsByClassName("tabcontent");
+  for (let i = 0; i < tabcontents.length; i++) {
+    tabcontents[i].className = "tabcontent hidden";
   }
   const newRoute = document.getElementById(route);
   // console.log(newRoute);
 
   newRoute.className = "tabcontent";
 }
+
 submit_form.onsubmit = async (e) => {
   e.preventDefault();
   const text = url_text.value;
@@ -99,25 +98,26 @@ submit_form.onsubmit = async (e) => {
     return;
   } else {
     error_field.innerHTML = "";
+    url_text.value = ""
   }
 
   // document.getElementById("res").innerHTML = response;
   addToHistory(response);
 };
+
 function click(e) {
   alert("Copied to Clipboard");
   data.copy(e.target.innerHTML);
 }
 
 function addToHistory(newItem: string) {
-  // can you change this to add it to top of list
-  history.unshift(newItem);
+  history.unshift(newItem); // unshift adds it to the top of an array
   const historyList = document.getElementById("history");
   const li = document.createElement("li");
   li.innerHTML = newItem;
   li.onclick = click;
 
-  historyList.prepend(li);
+  historyList.prepend(li); // prepend adds it to the top of the tree
 }
 
 function validateURL(url: string) {

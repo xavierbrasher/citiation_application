@@ -1,6 +1,5 @@
 * {
   color: #0a497c;
-  /* color: #6436a5; */
 }
 
 @keyframes fadeEffect {
@@ -54,13 +53,8 @@ textarea {
   padding-top: 5px;
   padding-bottom: 5px;
   border-radius: 10px;
-  /*background-color: #d9d9d9;*/
-
-
   background: 50%;
-
   resize: none;
-
   height: 2rem;
 }
 

@@ -1,4 +1,4 @@
-import { BibtextType } from "./bibtextToJson";
+import { BibtexType } from "./bibtexToJson";
 import citingTypes from "./citingTypes.json";
 import getCitationData from "./scraping";
 
@@ -32,7 +32,7 @@ const author = (author: string) => {
 
 const getDate = () => {
   const date = new Date();
-  return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
+  return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
 };
 
 const handlePage = (page: string) => {
@@ -40,7 +40,7 @@ const handlePage = (page: string) => {
   return copied_page.join("-");
 };
 
-function getDataFromEntry(text: string, data: BibtextType) {
+function getDataFromEntry(text: string, data: BibtexType) {
   if (text == "i" || text == "/i") {
     return "<" + text + ">";
   }
@@ -66,7 +66,7 @@ function getDataFromEntry(text: string, data: BibtextType) {
   return output.trimStart();
 }
 
-export function parseData(data: BibtextType) {
+export function parseData(data: BibtexType) {
   // console.log(data);
 
   const citingStr =

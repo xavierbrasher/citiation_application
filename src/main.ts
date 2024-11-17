@@ -3,7 +3,7 @@ import path from "path";
 import getCitationData from "./util/scraping";
 import { parseData } from "./util/cite";
 import { readFileSync } from "fs";
-import parseBibtext, { BibtextType } from "./util/bibtextToJson";
+import parseBibtex, { BibtexType } from "./util/bibtexToJson";
 import { read_cite_data, save_cite_data } from "./util/saveCitations";
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -26,7 +26,7 @@ const createWindow = () => {
     mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
   } else {
     mainWindow.loadFile(
-      path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`),
+      path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`)
     );
   }
 
@@ -42,7 +42,7 @@ const createWindow = () => {
 // Some APIs can only be used after this event occurs.
 app.on("ready", createWindow);
 
-let citations: BibtextType[] = [];
+let citations: BibtexType[] = [];
 
 ipcMain.handle("scrapeSite", async (event, url: string) => {
   const citation_data = await getCitationData(url);
@@ -60,7 +60,7 @@ ipcMain.handle("getFileData", async (event, view: string) => {
 
 ipcMain.handle("scrapeBibtex", async (event, bibtex: string) => {
   try {
-    const parsed = parseBibtext(bibtex);
+    const parsed = parseBibtex(bibtex);
     const cited = parseData(parsed);
     citations = [...citations, parsed];
     save_cite_data(citations);

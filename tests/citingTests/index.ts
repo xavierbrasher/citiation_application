@@ -1,16 +1,16 @@
 import getData from "./worked_index.ts";
 import { getInitals, getSurname } from "./initals.ts";
 import citingTypes from "./citingTypes.json" assert { type: "json" };
-import parseBibtext from "./lib/BibtextoJson.ts";
-import type { BibtextType } from "./lib/BibtextoJson.ts";
+import parseBibtex from "./lib/BibtexoJson.ts";
+import type { BibtexType } from "./lib/BibtexoJson.ts";
 
 const test = (await getData("https://www.jstor.org/stable/j.ctv1wvncxk.31"))
   .data;
 // const test = (await getData("https://www.jstor.org/stable/40379722")).data;
 
-const parsed = parseBibtext(test);
+const parsed = parseBibtex(test);
 
-function getDataFromEntry(text: string, data: BibtextType) {
+function getDataFromEntry(text: string, data: BibtexType) {
   if (text == "i" || text == "/i") {
     return "<" + text + ">";
   }
@@ -27,7 +27,7 @@ function getDataFromEntry(text: string, data: BibtextType) {
   return data[text as keyof typeof data];
 }
 
-function parseData(data: BibtextType) {
+function parseData(data: BibtexType) {
   const citingStr =
     citingTypes.types[data.type as keyof typeof citingTypes.types];
   // console.log(citingStr);
