@@ -1,7 +1,7 @@
 import electron from "electron";
-import fs, { readFile } from "fs";
+import fs from "fs";
 import path from "path";
-import parseBibtext, { BibtextType } from "./bibtexToJson";
+import parseBibtext, { BibtexType } from "./bibtexToJson";
 
 const dataPath = electron.app.getPath("userData");
 const filePath = path.join(dataPath, "config.json");
@@ -11,7 +11,7 @@ export const read_cite_data = async () => {
     const responce = fs.readFileSync(filePath, "utf-8");
     const json_res = await JSON.parse(responce);
 
-    let new_res: BibtextType[] = [];
+    let new_res: BibtexType[] = [];
 
     for (let i = 0; i < json_res.length; i++) {
       new_res = [...new_res, parseBibtext(json_res[i].raw)];
@@ -26,7 +26,7 @@ export const read_cite_data = async () => {
 
 };
 
-export const save_cite_data = async (data: BibtextType[]) => {
+export const save_cite_data = async (data: BibtexType[]) => {
   const string_json_data = await JSON.stringify(data);
 
   fs.writeFile(filePath, string_json_data, (err) => {

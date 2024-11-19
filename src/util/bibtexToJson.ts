@@ -73,10 +73,6 @@ const handleAuthor = (author: string) => {
 };
 
 export default function parseBibtex(bibtex: string): BibtexType {
-  // if (!false) {
-  //   throw new Error("Invalid bibtex format");
-  // }
-
   const fields = bibtex.split(",\n");
 
   const parsedData: Partial<BibtexType> = {};
@@ -91,7 +87,11 @@ export default function parseBibtex(bibtex: string): BibtexType {
       continue;
     }
     const [key, value] = field.split("=");
-    const trimmedKey = key.trim().toLowerCase();
+    console.log(key);
+    console.log((key || "undefinded").trim());
+
+
+    const trimmedKey = (key || "undefined").trim().toLowerCase();
 
     const trimmedValue = checkValue(value.replace(/^{(.*)}$/, "$1"));
 

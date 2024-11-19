@@ -46,42 +46,49 @@ function replaceNonUnicodeSymbols(text: any) {
   // eslint-disable-next-line no-control-regex
   return text.replace(/[^\x00-\x7F]/g, ""); // Replace non-Unicode characters with an empty string
 }
-const getDataFromJSTOR = async (url: string, $: CheerioAPI) => {
-  const uuid = $("div #cdt")[0].attribs["data-content-id"];
-  const data = (await axios.get("https://www.jstor.org/citation/text/" + uuid))
-    .data;
-
-  return parseBibtex(data);
-};
+//const getDataFromJSTOR = async (url: string, $: CheerioAPI) => {
+//  const uuid = $("div #cdt")[0].attribs["data-content-id"];
+//};
 
 const getCitationData = async (url: string) => {
-  try {
-    const page = await axios.get(url, {
-      headers: headers2,
-    });
-    const html = page.data;
-    const $ = load(html);
-    if (url.includes("https://www.jstor.org")) {
-      return await getDataFromJSTOR(url, $);
-    }
-  } catch (error) {
-    console.log("\n\n\nERROR:\n\n\n" + error);
+  const split_url = url.split("/")
+  const id_of_url = split_url[split_url.length - 1]
 
-    const code = error.toString().slice(-3);
-    const check_error = Number(code);
-    try {
-      const page = await axios.get(url, {
-        headers: headers,
-      });
-      const html = page.data;
-      const $ = load(html);
-      if (url.includes("https://www.jstor.org")) {
-        return await getDataFromJSTOR(url, $);
-      }
-    } catch (_error) {
-      return check_error;
-    }
-  }
+  console.log(id_of_url);
+  const data = (await axios.get("https://www.jstor.org/citation/text/" + id_of_url))
+    .data;
+  console.log(data);
+
+
+  return parseBibtex(data);
+
+  //try {
+  //  const page = await axios.get(url, {
+  //    headers: headers2,
+  //  });
+  //  const html = page.data;
+  //  const $ = load(html);
+  //  if (url.includes("https://www.jstor.org")) {
+  //    return await getDataFromJSTOR(url, $);
+  //  }
+  //} catch (error) {
+  //  console.log("\n\n\nERROR:\n\n\n" + error);
+  //
+  //  const code = error.toString().slice(-3);
+  //  const check_error = Number(code);
+  //  try {
+  //    const page = await axios.get(url, {
+  //      headers: headers,
+  //    });
+  //    const html = page.data;
+  //    const $ = load(html);
+  //    if (url.includes("https://www.jstor.org")) {
+  //      return await getDataFromJSTOR(url, $);
+  //    }
+  //  } catch (_error) {
+  //    return check_error;
+  //  }
+  //}
 };
 
 export default getCitationData;
